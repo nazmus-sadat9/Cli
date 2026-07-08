@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Add this to the bottom of your .gitignore
+.env
+
+# Local/Temporary Data Files
+filesData.txt
+
+# Discardable Test/Scratch Files
+x.js
+y.js
+n.js
+box
+
+# System / OS files (Good practice to always include)
+.DS_Store
+Thumbs.db
