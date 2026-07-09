@@ -2,13 +2,13 @@ require('dotenv').config();
 const { GoogleGenAI } = require('@google/genai');
 const readline = require('readline');
 const fs = require('fs');
-const path = require('path');
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
+// gemini apiKey and chat definition
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const chat = ai.chats.create({
     model: 'gemini-2.5-flash',
@@ -17,27 +17,31 @@ const chat = ai.chats.create({
     }
 });
 
+// option texts
+function showOptions(){
 // show types 
-console.log("----- select a type -----");
-console.log("1. Normal chat");
-console.log("2. Read files");
+  console.log("------ select a type ------");
+  console.log("1. Normal chat");
+  console.log("2. Read files");
 
 // select any where 
-function selectAnyWhere(){
-  console.log("----- access anywhere -----")
+  console.log("------ access anywhere ------")
   console.log("exit => #0");
   console.log("select again => #1");
   console.log("clear files data => #2");
-  console.log("see the data file => #3");
+  console.log("read the data file => #3");
+  console.log("------------------------------");
+  console.log(process.cwd());
+  console.log("------------------------------");
 }
 
-selectAnyWhere();
+showOptions();
 
 // files selection
 function files(){
-  console.log("1. One file");
-  console.log("2. Two plus files");
-  console.log("3. All files");
+  console.log("1. Single file");
+  console.log("2. Multiple files");
+  console.log("3. Multiple directories");
   
   rl.question("selection: ", (selection)=>{
 
@@ -56,11 +60,11 @@ function files(){
         break;
 
       case "2":
-        twoPlusFiles();
+        multipleFiles();
         break;
 
       case "3":
-        currenFolder();
+        multipleDirectories();
         break;
 
       default:
@@ -160,7 +164,7 @@ function singleFile(){
 
 
 // two or two plus files 
-function twoPlusFiles(){
+function multipleFiles(){
   rl.question("files name: ", async (files)=>{
     rl.question("prompt: ", async (prompt)=>{
 
@@ -203,17 +207,27 @@ function twoPlusFiles(){
       }
 
       // run the function again
-      twoPlusFiles()
+      multipleFiles()
 
     });
   });
 }
 
 
+// Multiple Directories
+function multipleDirectories(){
+  rl.question("directories: ", (directories)=>{
+    rl.question("prompt: ", (prompt)=>{
+
+      multipleDirectories();
+    });
+  });
+}
+
 // start point 
 async function ask() {
   rl.question("select type : ", async (request) => {
-        
+    
     switch (request) {
       case "#0":
         rl.close();
