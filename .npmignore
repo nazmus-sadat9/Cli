@@ -1,43 +1,48 @@
-# --- Secrets and Environment ---
+# Local Environment & Secrets (Sobcheye important)
 .env
+.env.local
 .env.*
-*.local
-.npmrc
+*.env
+config.json
+secrets.*
 
-# --- Version Control ---
-.git
-.gitignore
-.github/
+# Dependencies
+node_modules/
+jspm_packages/
 
-# --- Development Configs ---
-.editorconfig
-.prettierrc
-.prettierignore
-eslint.config.js
-tsconfig.json
-
-# --- Testing and Logs ---
-tests/
-__tests__/
-*.test.js
-*.spec.js
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.eslintcache
 
-# --- Documentation and Media ---
-assets/
-screenshots/
-*.md
-!README.md 
+# Version Control & Editor configs
+.git/
+.gitignore
+.github/
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
 
-# --- Build / Cache Directories ---
-.cache/
-.tmp/
-filesData.txt 
-n.js 
-x.js 
-y.js 
+# Testing & Coverage
+coverage/
+.nyc_output/
+*.spec.js
+*.test.js
+tests/
+__tests__/
 
-
+# Backup and Temp Files
+*.bak
+*.tmp
+*.temp
+box/
+n.js
+x.js
+y.js

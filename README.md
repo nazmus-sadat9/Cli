@@ -13,7 +13,7 @@ Add your apikey from from Google [Gemini](https://aistudio.google.com/api-keys?p
 
 ### Set your apikey
 ```bash
-echo 'export GEMINI_API_KEY="your_actual_api_key_here"' >> ~/${SHELL##*/}rc && source ~/${SHELL##*/}rc
+echo 'export GEMINI_API_KEY="your_actual_api_key_here"' >> ~/.bashrc && source ~/.bashrc
 ```
 
 ## Run 
