@@ -1,15 +1,18 @@
 {
-  "name": "gemini",
-  "version": "1.0.0",
-  "description": "",
+  "name": "light-cli",
+  "version": "0.2.1",
+  "description": "A ai cli made by genAI.",
   "main": "server.js",
+  "bin":{
+    "light-cli": "./server.js"
+  },
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["CLI", "AI"],
+  "author": "Nazmus Sadat",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@google/genai": "^2.10.0",

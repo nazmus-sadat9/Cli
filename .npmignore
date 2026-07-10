@@ -1,0 +1,43 @@
+# --- Secrets and Environment ---
+.env
+.env.*
+*.local
+.npmrc
+
+# --- Version Control ---
+.git
+.gitignore
+.github/
+
+# --- Development Configs ---
+.editorconfig
+.prettierrc
+.prettierignore
+eslint.config.js
+tsconfig.json
+
+# --- Testing and Logs ---
+tests/
+__tests__/
+*.test.js
+*.spec.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
+# --- Documentation and Media ---
+assets/
+screenshots/
+*.md
+!README.md 
+
+# --- Build / Cache Directories ---
+.cache/
+.tmp/
+filesData.txt 
+n.js 
+x.js 
+y.js 
+
+

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 require('dotenv').config();
 const { GoogleGenAI } = require('@google/genai');
 const readline = require('readline');
@@ -8,8 +10,14 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.log("Error: GEMINI_API_KEY is not set!");
+  process.exit(1);
+}
+
 // gemini apiKey and chat definition
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: apiKey });
 const chat = ai.chats.create({
     model: 'gemini-2.5-flash',
     config: {
@@ -91,9 +99,12 @@ function normalChat(){
 
     try {
       console.log("wait...");
+      
       let response = await chat.sendMessage({ message: prompt });
+     
       console.log(response.text);
       console.log("------------------------------")
+    
     } catch (err){
       console.log("message can't be sent!", err);
     }
@@ -120,7 +131,7 @@ function singleFile(){
     const [file, ...prompt] = request.split(" ");
     const newPrompt = prompt.join(" ");
 
-    if (file !== "this") {
+    if (file !== "#") {
       // get the data from file 
       let fileData = fs.readFileSync(file, "utf-8");
       
@@ -144,7 +155,7 @@ function singleFile(){
     }
 
     // for previous file 
-    else if(file === "this"){
+    else if(file === "#"){
       try {
         console.log("wait...");
         
@@ -156,7 +167,10 @@ function singleFile(){
         console.log("message can't be sent!", err);
         singleFile();
       }
+    } else{
+      console.log("Invalid input!");
     }
+
     // run the function again
     singleFile();
   });
@@ -165,7 +179,7 @@ function singleFile(){
 
 // two or two plus files 
 function multipleFiles(){
-  rl.question("files name: ", async (files)=>{
+  rl.question("files name: ", (files)=>{
     rl.question("prompt: ", async (prompt)=>{
 
       // check for exit command
@@ -225,9 +239,9 @@ function multipleDirectories(){
 }
 
 // start point 
-async function ask() {
+function ask() {
   rl.question("select type : ", async (request) => {
-    
+
     switch (request) {
       case "#0":
         rl.close();
