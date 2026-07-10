@@ -5,14 +5,14 @@ This is a AI Cli that help you anytime. It made by Node JS and GenAI.
 
 ## Install 
 ```
-npm install light-cli
+npm i @nazmus-sadat/light-cli
 ```
 
 ## Before start 
 Add your apikey from from Google [Gemini](https://aistudio.google.com/api-keys?project=gen-lang-client-0894752928) Cli and add your apikey in your terminal.
 
 ### Set your apikey
-```
+```bash
 echo 'export GEMINI_API_KEY="your_actual_api_key_here"' >> ~/${SHELL##*/}rc && source ~/${SHELL##*/}rc
 ```
 
