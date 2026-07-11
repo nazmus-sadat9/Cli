@@ -21,9 +21,9 @@ if (!apiKey) {
 // gemini apiKey and chat definition
 const ai = new GoogleGenAI({ apiKey: apiKey });
 const chat = ai.chats.create({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3.1-flash-lite',
     config: {
-        systemInstruction: "You are a helpful and witty chatbot assistant."
+        systemInstruction: "You are a senior software engineer with deep technical expertise. Provide clean, production-ready, and efficient code solutions. Explain complex architectural concepts simply, focus on best practices (like scalability, security, and maintainability), and maintain a constructive, peer-to-peer developer tone."
     }
 });
 
