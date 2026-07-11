@@ -30,7 +30,7 @@ At first select a type.
 2. Read file => 
     1. Single file => give a file name or file location then prompt. Example, "app.js find the bugs." If you skip the file name then you need to use "#". Example, "# thanks for find the bugs."
     2. Multiple files => At first give the files name or location and enter for next input. Example, "app.js routes.js .env" After the next input give your prompt. Example, "why it showing error?"
-    3. Multiple directory => (working)
+    3. Multiple directory => input single or multiple folders name and enter. After the second input just give your prompt, enter and wait for response.
 
 
 * To exit => #0 (work everywhere)

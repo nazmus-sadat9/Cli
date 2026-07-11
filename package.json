@@ -1,6 +1,6 @@
 {
   "name": "@nazmus-sadat/light-cli",
-  "version": "0.2.4",
+  "version": "1.0.0",
   "description": "A ai cli made by genAI.",
   "main": "server.js",
   "bin":{

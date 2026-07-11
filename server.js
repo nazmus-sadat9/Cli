@@ -4,6 +4,8 @@ require('dotenv').config();
 const { GoogleGenAI } = require('@google/genai');
 const readline = require('readline');
 const fs = require('fs');
+const path = require('path');
+const package = require("./package.json");
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -27,13 +29,14 @@ const chat = ai.chats.create({
 
 // option texts
 function showOptions(){
+  console.log(`v${package.version}`);
 // show types 
-  console.log("------ select a type ------");
+  console.log("-------- OPTIONS --------");
   console.log("1. Normal chat");
   console.log("2. Read files");
 
 // select any where 
-  console.log("------ access anywhere ------")
+  console.log("-------- CONTROLS --------")
   console.log("exit => #0");
   console.log("select again => #1");
   console.log("clear files data => #2");
@@ -187,7 +190,7 @@ function multipleFiles(){
         rl.close();
         return;
       }
-      if (files === "this") {
+      if (files === "#") {
         // empty
       }
       
@@ -229,18 +232,91 @@ function multipleFiles(){
 
 
 // Multiple Directories
-function multipleDirectories(){
-  rl.question("directories: ", (directories)=>{
-    rl.question("prompt: ", (prompt)=>{
+function multipleDirectories() {
+  rl.question("directory: ", (directories) => {
+    rl.question("prompt: ", async (prompt) => {
 
+      if (directories === "#0" || prompt === "#0") {
+        rl.close();
+        return;
+      } else if (directories === "#2" || prompt === "#2"){
+        ask();
+        return;
+      }
+
+    if (directories) {
+      const folders = directories.split(" ");
+
+      for (const folder of folders) {
+        
+        try {
+
+          const folderStats = fs.statSync(folder);
+
+          if (!folderStats.isDirectory()) {
+            console.error(`Error: '${folder}' is not a valid directory. Skipping.`);
+            continue;
+          }
+
+          const filesAndDirs = fs.readdirSync(folder);
+
+          for (const item of filesAndDirs) {
+             
+            const fullPath = path.join(folder, item);
+
+            try {
+              const itemStats = fs.statSync(fullPath); // Get stats for the item
+
+              if (itemStats.isFile()) {
+                // read only files 
+                const data = fs.readFileSync(fullPath, "utf-8");
+
+                // set the data in temporary file
+                fs.appendFileSync("filesData.txt", `/*${folder} > ${item} >\n${data}\n*/`);
+
+                // send to genai
+                  try {
+                    console.log("reading...");
+                    let messageData = fs.readFileSync("filesData.txt", "utf-8");
+
+                    let response = await chat.sendMessage({
+                      message: `${messageData} \n ${prompt}`
+                    });
+
+                    console.log(response.text);
+                    console.log("------------------------------");
+
+                  } catch (err){
+                    console.log("message can't be sent!", err);
+                  }
+
+              } else if (itemStats.isDirectory()) {
+                // Skipping subdirectory
+                console.log(`Skipping subdirectory: ${fullPath}`);
+              
+              } else {
+                console.log("Skipping non directory and files.");
+              }
+            } catch (itemError) {
+              console.error("reading error ",itemError.message);
+            }
+          }
+
+        } catch (dirError) {
+            console.log("directory not found!", dirError);
+        }
+      }
+    }
       multipleDirectories();
     });
   });
 }
 
+
+
 // start point 
 function ask() {
-  rl.question("select type : ", async (request) => {
+  rl.question("option : ", async (request) => {
 
     switch (request) {
       case "#0":
